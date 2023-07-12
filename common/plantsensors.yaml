@@ -1,0 +1,53 @@
+---
+sensor:
+  # Soil humidity %
+  - platform: adc
+    pin: GPIO32
+    name: '${devicename} Soil Moisture'
+    id: ${devicename}_moisture
+    icon: 'mdi:watering-can'
+    update_interval: ${update_interval}
+    attenuation: 11db
+    accuracy_decimals: 2 # comment for calibration
+    unit_of_measurement: '%' # comment for calibration
+    device_class: 'moisture'
+    state_class: 'measurement'
+    # unit_of_measurement: "V" # uncomment for calibration
+    filters: # comment when calibrating
+      - calibrate_linear: # comment when calibrating
+          # Map 0.0 (from sensor) to 0.0 (true value)
+          - ${moisture_min} -> 0.0 # comment when calibrating
+          - ${moisture_max} -> 100.0 # comment when calibrating
+
+  # Fertilizer sensor
+  - platform: adc
+    pin: GPIO34
+    name: '${devicename} Soil Conductivity'
+    icon: 'mdi:flower'
+    update_interval: ${update_interval}
+    accuracy_decimals: 2 # comment for calibration
+    unit_of_measurement: 'µS/cm' # comment when calibrating
+    # device_class: '' # for now home assistant does not support this class
+    state_class: 'measurement'
+    # unit_of_measurement: "V" # uncomment for raw data
+    filters: # comment when calibrating
+      - calibrate_linear: # comment when calibrating
+          # Map 0.0 (from sensor) to 0.0 (true value)
+          - ${conductivity_min} -> 0.0 # comment when calibrating
+          - ${conductivity_max} -> 100.0 # comment when calibrating
+
+  # Lux sensor
+  - platform: bh1750
+    i2c_id: bus_a
+    name: '${devicename} BH1750 Illuminance'
+    address: 0x23
+    unit_of_measurement: 'lx'
+    icon: 'mdi:white-balance-sunny'
+    device_class: 'illuminance'
+    state_class: 'measurement'
+    setup_priority: -300
+    update_interval: ${update_interval}
+    # convert to illuminance
+    filters:
+      - lambda: |-
+          return x * 200.0;

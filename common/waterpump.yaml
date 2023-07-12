@@ -1,0 +1,24 @@
+---
+switch:
+  - platform: gpio
+    pin: GPIO19
+    name: 'Water Pump'
+    id: water
+
+climate:
+  - platform: bang_bang
+    visual:
+      min_temperature: 0
+      max_temperature: 100
+      temperature_step: 1
+
+    name: ${devicename} Regler
+    sensor: ${devicename}_moisture
+    default_target_temperature_low: 20
+    default_target_temperature_high: 70
+
+    heat_action:
+      - switch.turn_on: water
+
+    idle_action:
+      - switch.turn_off: water
