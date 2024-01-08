@@ -8,6 +8,16 @@ The project utilizes [LILYGO T-Higrow plantsensor](https://pl.aliexpress.com/ite
 
 It is still work in progress. 🌿
 
+## Sensor features
+### EC sensor
+-  soil humidity
+-  feritilizer (soil conductivity)
+### BH1750 sensor
+-  ambient light
+### DHT sensor
+-  ambient temperature
+-  ambient humidity
+
 ## Adding the sensor to Home Assistant
 Sensor can be added to HS3's Home Assistant within the ESPHome in Home Assistant dashboard. The .yaml configuration file should point to the project template within this repository:
 ```yaml
@@ -15,4 +25,11 @@ packages:
   esphome.project-template: github://hs3city/kingbob-plant-sensor/LILYGO-T-Higrow-ESP32.yaml@main
 ```
 ## Calibration
+To get accurate readings the sensor should be calibrated before first use.
 Calibration process is described in the official [LILYGO-T-Higrow-Esphome website](https://bruvv.github.io/LILYGO-T-Higrow-Esphome/).
+
+You can utilize the branch [calibration](https://github.com/hs3city/kingbob-plant-sensor/tree/calibration) in this repository, which contains all changes in .yaml file required for the calibration process:
+```yaml
+packages:
+  esphome.project-template: github://hs3city/kingbob-plant-sensor/LILYGO-T-Higrow-ESP32.yaml@calibration
+```
